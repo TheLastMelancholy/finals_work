@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Дипломная работа</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  </head>
+  <body>
+    <header>
+      <div class="container_no_border">
+        <h1 class="logo">Дипломная работа</h1>
+
+
+        <strong><nav>
+          <ul class="menu">
+            <li><a class="header_link" href="{{ url_for('upload_task') }}">Добавить шаблон задания</a></li>
+            <li><a class="header_link" href="{{ url_for('generate_test') }}">Пройти тест</a></li>
+            <li><a class="header_link" href="{{ url_for('homepage') }}">Домой</a></li>
+
+            {% if current_user.is_anonymous %}
+            <li><a class="header_link" href="{{ url_for('login_repr') }}">Войти</a></li>
+            <li><a class="header_link" href="{{ url_for('register') }}">Зарегистрироваться</a></li>
+            {% else %}
+            <li><a class="header_link" href="{{ url_for('logout') }}">{{ current_user.username }} &nbsp;&nbsp;&nbsp;&nbsp; Выйти</a></li>
+            {% endif %}
+
+            
+          </ul>
+        </nav></strong>
+      </div>
+    </header>
+    <div class="container">
+      {% block content %}
+      {% endblock %}
+    </div>
+  </body>
+</html>

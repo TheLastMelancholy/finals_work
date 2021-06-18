@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+div {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%;
+}
+</style>
+
+<div>
+<div>Идентификатор теста: {{seed}}</div>
+<div><h2>А часть :</h2></div>
+<form action={{url_for(answers_url, seed=seed)}} method="POST">
+<table>
+  <tr>
+    <th>Номер задания</th>
+    <th>Задание</th>
+    <th>Варианты ответов</th>
+  </tr>
+  {% for a_task in  a_tasks%}
+  <tr>
+  <td><b>A{{loop.index}}</b></td>
+  {% set task_num = loop.index %}
+  <td>{{a_task.task_descr}}</td>
+  <td>
+    {% for answer in  a_task.answers %}
+
+  <input type="radio" id="{{task_num}}.{{loop.index}}" name="{{task_num}}" value={{loop.index}}>
+  <label for="{{task_num}}.{{loop.index}}">{{answer}}</label><br>
+ 
+    {% endfor %}
+  </td>
+  </tr>
+  {% endfor %}
+</table>
+    <input type="submit" value="ПОКАЗАТЬ РЕШЕНИЯ"/>
+  </form>
+<form action={{url_for(new_task_url, seed=seed)}}>
+    <input type="submit" value="НОВЫЙ ВАРИАНТ"/>
+  </form>
+</div>
+
+
+
+
+
+{% endblock %}

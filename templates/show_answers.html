@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+div {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%;
+}
+</style>
+
+<div>
+<div>Идентификатор теста: {{seed}}</div>
+<div><h2>А часть :</h2></div>
+<table>
+  <tr>
+    <th>Номер задания</th>
+    <th>Задание</th>
+    <th>Варианты ответов</th>
+  </tr>
+  {% for a_task in  a_tasks%}
+  <tr>
+  <td><b>A{{loop.index}}</b></td>
+  {% set task_num = loop.index %}
+  <td>{{a_task.task_descr}}</td>
+  <td>
+    {% for answer in  a_task.answers %}
+    <p><b>{{loop.index}}</b>
+      {% if answer==a_task.correct_answer and loop.index==answers[task_num-1]%} <b style="color:green">{{answer}}</b> {% elif answer==a_task.correct_answer and loop.index!=answers[task_num-1] %} <b style="color:blue"> {{answer}}</b>
+      {% elif answer!=a_task.correct_answer and loop.index==answers[task_num-1] %} <b style="color:red"> {{answer}}</b>
+      {% else %} {{answer}} {% endif %};
+     </p> 
+    {% endfor %}</td>
+  </tr>
+  {% endfor %}
+</table>
+</div>
+
+
+<form action={{url_for(new_task_url)}}>
+    <input type="submit" value="НОВЫЙ ВАРИАНТ"/>
+  </form>
+
+{% endblock %}

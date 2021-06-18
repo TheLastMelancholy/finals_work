@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div>
+<div><h1>Система генерации тестов</h1></div>
+{% if is_authenticated %}
+<div><h1>Пройти тест</h1>
+{% else %}
+<div><h1>Пройти тест без сохранения результатов</h1> <h4>Для сохранения результатов и отслеживания текущего прогресса войдите или зарегистрируйтесь.</h4>
+{% endif %}
+	<form action={{url_for(new_task_url)}}>
+    <input type="submit" value="Тест"/>
+  </form></div>
+{% if is_authenticated %}
+<div><h1>Список пройденных тестов</h1></div>
+{% endif %}
+
+{% for seed in completed_tests %}
+<a href={{url_for(answers_url, seed=seed)}}>{{seed}}</a>
+{% endfor %}
+
+<div><h1>Войти</h1></div>
+<div><h1>Зарегистрироваться</h1></div>
+
+<form action={{url_for(new_task_url)}}>
+    <input type="submit" value="НОВЫЙ ВАРИАНТ"/>
+  </form>
+
+{% endblock %}

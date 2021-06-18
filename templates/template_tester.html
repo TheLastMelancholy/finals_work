@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div>
+<div><h1>Система генерации тестов</h1></div>
+<form>
+  <label for="topic">Тема</label><br>
+  <input type="text" id="topic" name="topic"><br>
+  <label for="diff">Сложность задания (от 1 до 10)</label><br>
+  <input type="text" id="diff" name="diff"><br>
+  <label for="variables">Переменные (инструкция по описанию переменных)</label><br>
+  <textarea id="variables" name="variables"></textarea><br>
+  <!--
+  <label for="is_graph">Включен ли график в ответ</label><br>
+  <input type="checkbox" id="is_graph" name="is_graph">
+  <label for="grahp_template">Описание графических построений</label><br>
+  <input type="textarea" id="grahp_template" name="grahp_template">
+	-->
+  <label for="task_template">Шаблон задания (инстукция по заполнению шаблона задания)</label><br>
+  <textarea id="task_template" name="task_template"></textarea><br>
+  <label for="sol_template">Шаблон решения (инстукция по заполнению шаблона решения)</label><br>
+  <textarea id="sol_template" name="sol_template"></textarea>	<br>
+  <label for="is_variant">Является ли задание многовариантным</label><br>
+  <input type="checkbox" id="is_variant" name="is_variant"><br>
+  <label for="num_solutions">Количество решений</label><br>
+  <input type="text" id="num_solutions" name="num_solutions"><br>
+
+  <input type="submit" value="СГЕНЕРИРОВАТЬ ЗАДАНИЯ"/>
+
+
+</form>
+</div>
+
+{% endblock %}
+
+
+
+
+
+class VarianTaskTemplate(db.Model):
+	__tablename__ = "variant_task"
+	id 				= db.Column(db.Integer, primary_key=True)
+	topic 			= db.Column(db.String(80), unique=False,  nullable=False, primary_key=False)
+	diff 			= db.Column(db.Integer, unique=False,  nullable=False, primary_key=False)
+	variables 		= db.Column(db.String(120), unique=False,  nullable=False, primary_key=False)
+	is_graph 		= db.Column(db.Boolean, unique=False, nullable=False, primary_key=False)
+	grahp_template 	= db.Column(db.String(240), unique=False, nullable=True, primary_key=False)
+	task_template 	= db.Column(db.String(240), unique=True,  nullable=False, primary_key=False)
+	sol_template 	= db.Column(db.String(240), unique=False,  nullable=False, primary_key=False)
+	is_variant		= db.Column(db.Boolean, unique=False, nullable=False, primary_key=False)
+	num_solutions 	= db.Column(db.Integer, unique=False,  nullable=False, primary_key=False)
+
+	def __repr__(self):
+		return "id : {} | topic : | {} task_template : {} | sol_template : {}".format(self.id, self.topic, self.task_template, self.sol_template)
